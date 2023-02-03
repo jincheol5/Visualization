@@ -1,21 +1,17 @@
+
 import matplotlib.pyplot as plt
-
-# create data
-x=['t1','t2','t3','t4','t5']
-y1=['a','b','c','d','e']
+from pandas.plotting import parallel_coordinates
+import pandas as pd
 
 
-# make subplots
-fig, (ax1,ax2,ax3,ax4) = plt.subplots(1, 4, sharey=False)
-ax = (ax1,ax2,ax3,ax4)
 
-# plot subplots and set xlimit
-for i in range(4):
-    ax[i].plot(x,y1,'g-.')
-    ax[i].set_xlim([ x[i],x[i+1]])
+df = pd.read_csv('data/mydata-10.csv')
 
-# set width space to zero
-plt.subplots_adjust(wspace=0)
+dataf=df.astype('string')
 
-# show plot
+
+print(dataf)
+
+parallel_coordinates(dataf,class_column='time')
+
 plt.show()
