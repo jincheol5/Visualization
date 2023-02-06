@@ -1,26 +1,18 @@
 import matplotlib.pyplot as plt
-import numpy as np
+import pandas as pd
 
+df = pd.DataFrame({'A': [1, 2, 3],
+                'B': [4, 5, 6],
+                'C': [7, 8, 9]})
 
-y=['a','b','c','d','e']
+fig, ax = plt.subplots()
+ax.set_xticks([0, 1, 2])
+ax.set_xticklabels(['A', 'B', 'C'])
 
-x_list=[[1,2],[2,3],[3,4],[4,5]]
+for i in range(3):
+    ax.plot(df.columns, df.iloc[i], '-o')
 
-
-y_list=[['a','b'],['a','c'],['b','d'],['d','a']]
-
-
-fig,ax_s=plt.subplots(ncols=4)
-
-i=0
-for ax in ax_s:
-    ax.set_ylim(y)
-    ax.plot(x_list[i],y_list[i])
-    i+=1
-
-
-fig.subplots_adjust(wspace=0)
-
-
-
+plt.xlim(-0.5, 2.5)
+plt.ylim(0, 10)
+plt.title('Parallel Coordinate Plot')
 plt.show()
