@@ -43,16 +43,22 @@ G=nx.Graph()
 
 time_nodes={} #기준 시간축 노드들
 
-time_value=100000 #시간 축 간격 기준, 기준이 너무 크면 오류 
+time_value=10000 #시간 축 간격 기준, 기준이 너무 크면 오류 
 
 max_unixtime=max(unixtimes)
 min_unixtime=min(unixtimes)
 
 
 
-time_axis=min_unixtime
+time_axis=min_unixtime 
+
 
 #각 시간축마다 노드들 이름 변경하여 추가 
+#시작 노드들 set
+time_nodes[0]=[]
+for node in nodes:
+    time_nodes[0].append(node+"-0")
+
 while(time_axis<max_unixtime):
     new_nodes=[]
     for t in range(len(nodes)):
@@ -63,17 +69,16 @@ while(time_axis<max_unixtime):
 
 
 #그래프에 node 추가 
-time_axis=min_unixtime
-while(time_axis<max_unixtime):
-    G.add_nodes_from(time_nodes[time_axis])
-    time_axis+=time_value
+for key,value in time_nodes.items():
+    G.add_nodes_from(value)
+
 
 
 #그래프에 edge 추가
 for edge in edges:
     time_index=int((int(edge.unixtime)-min_unixtime)/time_value)
     if time_index==0:
-        G.add_edge(edge.source+"-"+str(min_unixtime),edge.target+"-"+str(min_unixtime+time_value))
+        G.add_edge(edge.source+"-0",edge.target+"-"+str(min_unixtime))
     else:
         G.add_edge(edge.source+"-"+str(min_unixtime+(time_index*time_value-time_value)),edge.target+"-"+str(min_unixtime+time_index*time_value))
     
@@ -86,14 +91,18 @@ for edge in edges:
 pos = {}
 
 x_axis=0
-time_axis=min_unixtime
+time_axis=0
 
 while(time_axis<max_unixtime):
     for index in range(len(time_nodes[time_axis])):
         pos[time_nodes[time_axis][index]]=(x_axis,index)
         
     x_axis+=10000
-    time_axis+=time_value
+    
+    if time_axis==0: time_axis=min_unixtime
+    else: time_axis+=time_value
+    
+    
     
 # Draw the graph with the custom layout
 nx.draw(G,pos,node_size=1)
