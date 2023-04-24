@@ -9,13 +9,6 @@ class event:
         self.target=target
         self.unixtime=unixtime
     
-    def get_label(self):
-        return self.label
-    def get_source(self):
-        return self.source
-    def get_target(self):
-        return self.target
-    def get_unixtime(self):
-        return self.unixtime
+
         
     
