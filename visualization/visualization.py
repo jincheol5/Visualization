@@ -9,7 +9,7 @@ edges=[]
 unixtimes=[]
 
 #data 불러오기 
-file=open('visualization/data/data-1000.csv','r')
+file=open('visualization/data/example data.csv','r')
 lines=csv.reader(file)
 
 
@@ -43,7 +43,7 @@ G=nx.Graph()
 
 time_nodes={} #기준 시간축 노드들
 
-time_value=10000 #시간 축 간격 기준, 기준이 너무 크면 오류 
+time_value=200 #시간 축 간격 기준, 기준이 너무 크면 오류 
 
 max_unixtime=max(unixtimes)
 min_unixtime=min(unixtimes)
@@ -59,7 +59,7 @@ time_nodes[0]=[]
 for node in nodes:
     time_nodes[0].append(node+"-0")
 
-while(time_axis<max_unixtime):
+while(time_axis<=max_unixtime):
     new_nodes=[]
     for t in range(len(nodes)):
         new_nodes.append(nodes[t]+"-"+str(time_axis))
@@ -87,13 +87,15 @@ for edge in edges:
 
 
 
+
+
 # Define a custom layout
 pos = {}
 
 x_axis=0
 time_axis=0
 
-while(time_axis<max_unixtime):
+while(time_axis<=max_unixtime):
     for index in range(len(time_nodes[time_axis])):
         pos[time_nodes[time_axis][index]]=(x_axis,index)
         
@@ -105,7 +107,7 @@ while(time_axis<max_unixtime):
     
     
 # Draw the graph with the custom layout
-nx.draw(G,pos,node_size=1)
+nx.draw(G,pos,node_size=100,with_labels=True)
 
 # Show the plot
 plt.show()
